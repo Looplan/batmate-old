@@ -9,7 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProviders
-import com.crashlytics.android.Crashlytics
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -42,7 +42,7 @@ class GoogleSignInFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         // Get the view model.
-        viewModel = ViewModelProviders.of(activity!!).get(IntroViewModel::class.java)
+        viewModel = ViewModelProviders.of(requireActivity()).get(IntroViewModel::class.java)
 
         auth = FirebaseAuth.getInstance()
 
@@ -51,9 +51,9 @@ class GoogleSignInFragment : Fragment() {
             .requestEmail()
             .build()
 
-        client = GoogleSignIn.getClient(activity!!, signInOptions)
+        client = GoogleSignIn.getClient(requireActivity(), signInOptions)
 
-        val account = GoogleSignIn.getLastSignedInAccount(activity!!)
+        val account = GoogleSignIn.getLastSignedInAccount(requireActivity())
 
         if(account != null) {
             viewModel.account.value = account
@@ -110,7 +110,7 @@ class GoogleSignInFragment : Fragment() {
         val credential = GoogleAuthProvider.getCredential(account.idToken, null)
 
         auth.signInWithCredential(credential)
-            .addOnCompleteListener(activity!!) { task ->
+            .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithCredential:success")

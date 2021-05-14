@@ -2,8 +2,10 @@ package nl.looplan.batmate.ui.scanandrecord.activities
 
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -118,7 +120,7 @@ class ScanAndRecordActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-
+        super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == CameraIntentHelper.CAMERA_INTENT_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             onImageTaken()
         }

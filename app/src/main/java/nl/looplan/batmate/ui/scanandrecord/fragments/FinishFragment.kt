@@ -77,7 +77,7 @@ class FinishFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         // Get the view model.
-        viewModel = ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
+        viewModel = ViewModelProviders.of(requireActivity()).get(MainViewModel::class.java)
 
         viewModel.uploadToggle.observe(this, Observer {
             showProgress()

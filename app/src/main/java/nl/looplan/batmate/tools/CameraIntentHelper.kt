@@ -1,6 +1,7 @@
 package nl.looplan.batmate.tools
 
 import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Environment
 import android.provider.MediaStore
@@ -17,7 +18,7 @@ object CameraIntentHelper {
 
     const val CAMERA_INTENT_REQUEST_CODE = 222
 
-    fun createTempFile(activity: Activity): File {
+    private fun createTempFile(activity: Activity): File {
         activity.run {
             val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
 
@@ -43,15 +44,21 @@ object CameraIntentHelper {
         return file
     }
 
-    fun startIntent(activity: Activity, file: File) {
+    private fun startIntent(activity: Activity, file: File) {
         activity.run {
             Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+
                 takePictureIntent.resolveActivity(packageManager)?.also {
 
                     val uri = FileProvider.getUriForFile(applicationContext, "com.example.android.fileprovider", file)
 
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
-                    startActivityForResult(takePictureIntent, CAMERA_INTENT_REQUEST_CODE)
+                    try {
+                        startActivityForResult(takePictureIntent, CAMERA_INTENT_REQUEST_CODE)
+                    } catch(e: ActivityNotFoundException) {
+                        error(e)
+                    }
+
                 }
             }
         }

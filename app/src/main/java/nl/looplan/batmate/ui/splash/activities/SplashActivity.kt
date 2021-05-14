@@ -27,12 +27,7 @@ class SplashActivity : AppCompatActivity() {
         // Set custom theme.
         setTheme(R.style.AppTheme)
 
-        val user = FirebaseAuth.getInstance().currentUser
-        if(user != null) {
-            checkPermissions()
-        } else {
-            startIntroActivityAndFinish()
-        }
+        checkIfFinishedBeforeAndContinue()
     }
 
     private fun checkIfFinishedBeforeAndContinue() {

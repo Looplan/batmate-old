@@ -46,7 +46,7 @@ class MainViewModel : ViewModel() {
             }
             .addOnFailureListener {
                 // Log the error.
-                Log.e("PlayerSelectionFragment", it.message)
+                Log.e("PlayerSelectionFragment", it.message!!)
             }
     }
 

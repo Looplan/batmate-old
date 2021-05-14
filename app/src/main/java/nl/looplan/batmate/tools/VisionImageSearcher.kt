@@ -44,7 +44,7 @@ object VisionImageSearcher {
             // Iterate through each text block.
             for(block in text.textBlocks) {
                 // Check if the search rectangle contains the rectangle of the text block.
-                val contains = searchRectangle.contains(block.boundingBox)
+                val contains = searchRectangle.contains(block.boundingBox!!)
                 if(contains) {
                     // Add the block to the list of blocks in the search rectangle.
                     blocksInSearchRectangle.add(block)

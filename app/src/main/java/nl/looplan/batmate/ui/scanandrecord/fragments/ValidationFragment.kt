@@ -45,7 +45,7 @@ class ValidationFragment : Fragment() {
     ): View? {
 
         // Get the view model.
-        viewModel = ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
+        viewModel = ViewModelProviders.of(requireActivity()).get(MainViewModel::class.java)
 
         val binding : FragmentValidationBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_validation, container, false)
         binding.viewModel = viewModel
@@ -59,7 +59,7 @@ class ValidationFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         // Get the view model.
-        viewModel = ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
+        viewModel = ViewModelProviders.of(requireActivity()).get(MainViewModel::class.java)
 
         setupObservers()
 
@@ -67,7 +67,7 @@ class ValidationFragment : Fragment() {
     }
 
     private fun setupObservers() {
-        viewModel.visionImage.observe(this, Observer {
+        viewModel.visionImage.observe(viewLifecycleOwner, Observer {
             if(it != null) {
                 showRecognitionProgress()
 
@@ -76,7 +76,7 @@ class ValidationFragment : Fragment() {
             }
         })
 
-        viewModel.recognizedText.observe(this, Observer {
+        viewModel.recognizedText.observe(viewLifecycleOwner, Observer {
             if(it != null) {
                 hideRecognitionProgress()
             }
@@ -85,7 +85,7 @@ class ValidationFragment : Fragment() {
 
     private fun setupListeners() {
         validation_fab.setOnClickListener {
-
+            viewModel.uploadToggle.call()
         }
     }
 
