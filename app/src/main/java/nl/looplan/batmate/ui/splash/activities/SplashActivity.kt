@@ -27,7 +27,7 @@ class SplashActivity : AppCompatActivity() {
         // Set custom theme.
         setTheme(R.style.AppTheme)
 
-        checkIfFinishedBeforeAndContinue()
+        checkPermissions()
     }
 
     private fun checkIfFinishedBeforeAndContinue() {
@@ -79,7 +79,6 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun checkPermissions() {
-
         Dexter.withActivity(this)
             .withPermission(Manifest.permission.CAMERA)
             .withListener(permissionListener)
